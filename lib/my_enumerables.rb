@@ -16,7 +16,7 @@ module Enumerable
   
   def my_select
     array = []
-    self.my_each { |elem| array.push(elem) if yield elem }
+    self.my_each { |elem| array << elem if yield elem }
     return array
   end
 
@@ -46,7 +46,7 @@ module Enumerable
   def my_map
     i = 0
     array = []
-    length.times { array.push(yield self[i]) and i+=1 }
+    length.times { array << yield(self[i]) and i+=1 }
     array
   end
 end
