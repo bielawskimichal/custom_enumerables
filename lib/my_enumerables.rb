@@ -1,35 +1,35 @@
 module Enumerable
   def my_any?
-    self.my_each { |elem| return true if yield elem }
+    my_each { |e| return true if yield e }
     return false
   end
   
   def my_all?
-    self.my_each { |elem| return false unless yield elem }
+    my_each { |e| return false unless yield e }
     return true
   end
 
   def my_none?
-    self.my_each { |elem| return false if yield elem }
+    my_each { |e| return false if yield e }
     return true
   end
   
   def my_select
     array = []
-    self.my_each { |elem| array << elem if yield elem }
+    my_each { |e| array << e if yield e }
     return array
   end
 
   def my_count
-    return self.length unless block_given?
+    return length unless block_given?
     i = 0
-    self.my_each { |elem| i += 1 if yield elem }
+    my_each { |e| i += 1 if yield e }
     i
   end
   
   def my_each_with_index
     i = 0
-    length.times { yield self[i], i and i += 1 }
+    my_each { |e| yield e, i and i += 1 }
     self
   end
   
@@ -44,9 +44,8 @@ module Enumerable
   end
   
   def my_map
-    i = 0
     array = []
-    length.times { array << yield(self[i]) and i+=1 }
+    my_each {|e| array << yield(e) }
     array
   end
 end
@@ -57,11 +56,9 @@ end
 # to this method
 class Array
   def my_each
-    i = 0
-    length.times {
-      yield self[i]
-      i += 1
-    }
+    for e in self
+      yield e
+    end
     self
   end
 end
