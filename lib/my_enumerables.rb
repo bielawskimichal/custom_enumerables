@@ -15,9 +15,9 @@ module Enumerable
   end
   
   def my_select
-    array = []
-    my_each { |e| array << e if yield e }
-    return array
+    res = []
+    my_each { |e| res << e if yield e }
+    return res
   end
 
   def my_count
@@ -28,25 +28,20 @@ module Enumerable
   end
   
   def my_each_with_index
-    i = 0
-    my_each { |e| yield e, i and i += 1 }
+    length.times { |i| yield self[i], i }
     self
   end
   
-  def my_inject(initial_value)
-    i = 0
-    sum = initial_value
-    length.times { 
-      sum if i == 0
-      sum = yield(sum, self[(i - 1)]) and i += 1
-    }
+  def my_inject(init_val)
+    sum = init_val
+    my_each {|e| sum = yield sum, e }
     sum
   end
   
   def my_map
-    array = []
-    my_each {|e| array << yield(e) }
-    array
+    res = []
+    my_each {|e| res << yield(e) }
+    res
   end
 end
 
